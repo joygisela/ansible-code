@@ -17,11 +17,22 @@
         path: /tmp/ansible.txt
         state: touch
         mode: '0600'
+      register: output
+    - name: read the output
+      debug:
+       # var: output
+       msg: "Hello from ansible this is running on {{ ansible_os_family }}"
     - name: create directory
       file: 
         path: /tmp/dir
         state: directory
         mode: '0777'
+      tags:
+        - app1
+        - c1
+    - name: create a file
+      shell: cat /etc/passwd | grep fabrice
+      # command: cat /etc/passwd
     - name: install apache
       yum:
          name: "{{ pkg_name }}"
